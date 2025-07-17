@@ -1,34 +1,35 @@
 ### Research Agent
 
-The Research Agent is a web-based tool designed to conduct in-depth research on user-defined topics and generate comprehensive reports. It provides a user-friendly interface for initiating research and viewing the results, including the generated report, source URLs, and estimated costs.
+The Research Agent is a web-based tool powered by GPT Researcher that conducts comprehensive research and generates detailed reports on specified topics. It provides a user-friendly interface to submit research queries and view the generated reports, including sources and estimated costs.
 
 #### Functionality
-
-*   **Web Interface:** Offers an interactive web page where users can submit research queries and select the desired report type.
-*   **Automated Research:** Utilizes the GPT Researcher library to gather and synthesize information from multiple online sources based on the provided query.
-*   **Report Generation:** Creates structured reports, which can be a detailed research report, a resource list, or an outline.
-*   **Source and Cost Tracking:** Provides a list of all sources used during the research process and an estimate of the associated costs.
-*   **Health Check:** Includes an endpoint to verify the configuration of required API keys.
+- **Conducts Research**: Takes a user query and performs in-depth research using the GPT Researcher library.
+- **Generates Reports**: Produces various types of reports, including:
+    - **Research Report**: A comprehensive analysis of the query.
+    - **Resource Report**: A collection of relevant resources.
+    - **Outline Report**: A structured outline of the research topic.
+- **Provides Sources**: Lists the URLs of the sources used to compile the report.
+- **Estimates Costs**: Displays the estimated cost of the research.
+- **Web Interface**: Offers a simple web application for submitting queries and displaying results.
 
 #### Inputs
-
-*   **HTTP POST to `/research` (via Web UI or API call):**
-    *   `query` (string): The specific topic or question for which research is needed.
-    *   `report_type` (string, optional): The desired format of the output report. Supported types include "research\_report" (default), "resource\_report", and "outline\_report".
-*   **Environment Variables:**
-    *   `OPENAI_API_KEY`: Required for authenticating with the OpenAI API, which powers the language model capabilities.
-    *   `TAVILY_API_KEY`: Required for authenticating with the Tavily API, used for web search and information retrieval.
+- **Medium**: HTTP POST request
+- **Endpoint**: `/research`
+- **Format**: JSON
+- **Parameters**:
+    - `query` (string, required): The specific topic or question for research.
+    - `report_type` (string, optional): The desired type of report. Defaults to "research_report". Supported types include "research_report", "resource_report", and "outline_report".
 
 #### Outputs
+- **Medium**: HTTP JSON response
+- **Endpoint**: `/research`
+- **Format**: JSON
+- **Parameters**:
+    - `report` (string): The generated research report content.
+    - `sources` (list of strings): A list of URLs from which information was gathered.
+    - `costs` (dictionary): Contains `total_cost` (float) and `total_tokens` (integer) related to the research.
+    - `num_sources` (integer): The total count of unique sources identified.
 
-*   **HTTP GET from `/` (Web UI):**
-    *   An HTML page (`static/index.html`) providing the user interface.
-*   **HTTP POST from `/research` (JSON response):**
-    *   `report` (string): The generated research report content, typically in Markdown format.
-    *   `sources` (list of strings): A list of URLs from which information was gathered.
-    *   `costs` (dictionary): Contains `total_cost` (float) representing the estimated cost of the research.
-    *   `num_sources` (integer): The total count of unique sources identified.
-
-#### Prerequisites
-
-*   **API Keys:** Requires valid `OPENAI_API_KEY` and `TAVILY_API_KEY` to be set as environment variables. Without these, the research functionality will not operate.
+#### Environment Variables
+- `OPENAI_API_KEY`: Required for authenticating with the OpenAI API, which is essential for the GPTResearcher's operation.
+- `TAVILY_API_KEY`: Required for authenticating with the Tavily API, used for search and information retrieval by the GPTResearcher.
