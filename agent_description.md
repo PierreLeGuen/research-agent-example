@@ -1,34 +1,25 @@
 ### Research Agent
 
-The Research Agent is a web-based tool designed to conduct in-depth research on user-defined topics and generate comprehensive reports. It provides a user-friendly interface for initiating research and viewing the results, including the generated report, source URLs, and estimated costs.
+This agent is a web-based research assistant powered by GPT Researcher. It conducts comprehensive research on a given query and generates detailed reports, summarizing information from various sources. It also provides a list of the sources used and calculates the associated costs.
 
-#### Functionality
+**Main Functions:**
+*   **Conduct Research:** Takes a research query and a specified report type (e.g., research, resource, outline) to gather information from the web.
+*   **Generate Reports:** Produces a structured report based on the gathered research, including a summary and relevant details.
+*   **Source Attribution:** Provides a list of URLs from which information was retrieved.
+*   **Cost Estimation:** Reports the estimated cost of the research process.
 
-*   **Web Interface:** Offers an interactive web page where users can submit research queries and select the desired report type.
-*   **Automated Research:** Utilizes the GPT Researcher library to gather and synthesize information from multiple online sources based on the provided query.
-*   **Report Generation:** Creates structured reports, which can be a detailed research report, a resource list, or an outline.
-*   **Source and Cost Tracking:** Provides a list of all sources used during the research process and an estimate of the associated costs.
-*   **Health Check:** Includes an endpoint to verify the configuration of required API keys.
+**Inputs:**
+*   **HTTP POST to `/research`**:
+    *   `query` (string): The research topic or question.
+    *   `report_type` (string, optional): The type of report to generate (e.g., "research_report", "resource_report", "outline_report"). Defaults to "research_report".
 
-#### Inputs
+**Outputs:**
+*   **HTTP JSON Response from `/research`**:
+    *   `report` (string): The generated research report content.
+    *   `sources` (list of strings): A list of URLs for the sources used in the research.
+    *   `costs` (dictionary): Contains `total_cost` (float) and `total_tokens` (integer, currently 0 as not directly provided by GPT Researcher).
+    *   `num_sources` (integer): The total number of research sources found.
 
-*   **HTTP POST to `/research` (via Web UI or API call):**
-    *   `query` (string): The specific topic or question for which research is needed.
-    *   `report_type` (string, optional): The desired format of the output report. Supported types include "research\_report" (default), "resource\_report", and "outline\_report".
-*   **Environment Variables:**
-    *   `OPENAI_API_KEY`: Required for authenticating with the OpenAI API, which powers the language model capabilities.
-    *   `TAVILY_API_KEY`: Required for authenticating with the Tavily API, used for web search and information retrieval.
-
-#### Outputs
-
-*   **HTTP GET from `/` (Web UI):**
-    *   An HTML page (`static/index.html`) providing the user interface.
-*   **HTTP POST from `/research` (JSON response):**
-    *   `report` (string): The generated research report content, typically in Markdown format.
-    *   `sources` (list of strings): A list of URLs from which information was gathered.
-    *   `costs` (dictionary): Contains `total_cost` (float) representing the estimated cost of the research.
-    *   `num_sources` (integer): The total count of unique sources identified.
-
-#### Prerequisites
-
-*   **API Keys:** Requires valid `OPENAI_API_KEY` and `TAVILY_API_KEY` to be set as environment variables. Without these, the research functionality will not operate.
+**Environment Variables:**
+*   **`OPENAI_API_KEY`**: Required for interacting with OpenAI models, which are used by GPT Researcher.
+*   **`TAVILY_API_KEY`**: Required for using the Tavily search API, essential for information retrieval.
