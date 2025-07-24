@@ -1,34 +1,40 @@
-### Research Agent
+# Research Agent
 
-The Research Agent is a web-based tool designed to conduct in-depth research on user-defined topics and generate comprehensive reports. It provides a user-friendly interface for initiating research and viewing the results, including the generated report, source URLs, and estimated costs.
+The Research Agent is an AI-powered service that conducts comprehensive research and generates detailed reports based on user queries. It leverages the GPT Researcher library to gather information from various sources and synthesize it into structured reports. The agent provides a web-based user interface for easy interaction and an API for programmatic access.
 
-#### Functionality
+## Main Functions
 
-*   **Web Interface:** Offers an interactive web page where users can submit research queries and select the desired report type.
-*   **Automated Research:** Utilizes the GPT Researcher library to gather and synthesize information from multiple online sources based on the provided query.
-*   **Report Generation:** Creates structured reports, which can be a detailed research report, a resource list, or an outline.
-*   **Source and Cost Tracking:** Provides a list of all sources used during the research process and an estimate of the associated costs.
-*   **Health Check:** Includes an endpoint to verify the configuration of required API keys.
+*   **Conduct Research**: Takes a user-defined query and a specified report type (e.g., research, resource, outline) to perform in-depth research.
+*   **Generate Reports**: Produces well-structured research reports, including key findings, supporting details, and source attribution.
+*   **Source Tracking**: Identifies and lists the URLs of all sources used during the research process.
+*   **Cost Estimation**: Provides an estimate of the costs associated with the research, based on API usage.
+*   **Health Check**: Offers an endpoint to verify the operational status of the agent and the configuration of required API keys.
 
-#### Inputs
+## Inputs
 
-*   **HTTP POST to `/research` (via Web UI or API call):**
-    *   `query` (string): The specific topic or question for which research is needed.
-    *   `report_type` (string, optional): The desired format of the output report. Supported types include "research\_report" (default), "resource\_report", and "outline\_report".
-*   **Environment Variables:**
-    *   `OPENAI_API_KEY`: Required for authenticating with the OpenAI API, which powers the language model capabilities.
-    *   `TAVILY_API_KEY`: Required for authenticating with the Tavily API, used for web search and information retrieval.
+*   **Medium**: HTTP POST request
+*   **Endpoint**: `/research`
+*   **Content**: JSON payload with the following fields:
+    *   `query` (string, required): The research topic or question.
+    *   `report_type` (string, optional): The desired type of report. Defaults to `research_report`. Supported types include `research_report`, `resource_report`, and `outline_report`.
 
-#### Outputs
+## Outputs
 
-*   **HTTP GET from `/` (Web UI):**
-    *   An HTML page (`static/index.html`) providing the user interface.
-*   **HTTP POST from `/research` (JSON response):**
-    *   `report` (string): The generated research report content, typically in Markdown format.
-    *   `sources` (list of strings): A list of URLs from which information was gathered.
-    *   `costs` (dictionary): Contains `total_cost` (float) representing the estimated cost of the research.
-    *   `num_sources` (integer): The total count of unique sources identified.
+*   **Medium**: HTTP Response (JSON or HTML)
+*   **Endpoint `/research`**:
+    *   **Content**: JSON payload containing the research results:
+        *   `report` (string): The generated research report in Markdown format.
+        *   `sources` (list of strings): A list of URLs from which information was gathered.
+        *   `costs` (dict): A dictionary detailing the estimated cost of the research (e.g., `total_cost`).
+        *   `num_sources` (int): The total number of sources identified.
+*   **Endpoint `/`**:
+    *   **Content**: HTML page providing a user interface to interact with the research agent.
+*   **Endpoint `/health`**:
+    *   **Content**: JSON payload indicating the agent's status and whether required API keys are configured.
 
-#### Prerequisites
+## Prerequisites
 
-*   **API Keys:** Requires valid `OPENAI_API_KEY` and `TAVILY_API_KEY` to be set as environment variables. Without these, the research functionality will not operate.
+This agent requires the following environment variables to be configured for proper operation:
+
+*   `OPENAI_API_KEY`: Your API key for accessing OpenAI's language models.
+*   `TAVILY_API_KEY`: Your API key for using the Tavily search API, essential for information retrieval.
