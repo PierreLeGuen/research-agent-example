@@ -6,7 +6,7 @@ summary: A research agent powered by GPT Researcher that conducts comprehensive 
 environment_variables:
   - name: OPENAI_API_KEY
     value: <your_openai_api_key>
-    description: The OpenAI API key required for the GPTResearcher to function.
+    description: The OpenAI API key required for the GPTResearcher to function, specifically for interacting with OpenAI's models.
   - name: TAVILY_API_KEY
     value: <your_tavily_api_key>
     description: The Tavily API key required for the GPTResearcher to function, likely used for search and information retrieval.
