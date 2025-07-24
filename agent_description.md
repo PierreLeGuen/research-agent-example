@@ -1,34 +1,27 @@
 ### Research Agent
 
-The Research Agent is a web-based tool designed to conduct in-depth research on user-defined topics and generate comprehensive reports. It provides a user-friendly interface for initiating research and viewing the results, including the generated report, source URLs, and estimated costs.
+The Research Agent is a web-based service powered by GPT Researcher that conducts comprehensive research and generates detailed reports based on user queries. It provides a user-friendly interface to initiate research and view results.
 
-#### Functionality
+**Main Functions:**
+*   **Conduct Research:** Takes a user query and a specified report type (e.g., research report, resource report, outline report) to perform in-depth research.
+*   **Generate Reports:** Produces structured research reports, including key findings, supporting sources, and estimated costs.
+*   **Serve Web Interface:** Provides an interactive web application for users to input queries and display research outcomes.
+*   **Health Check:** Offers an endpoint to verify the operational status of the agent and the configuration of required API keys.
 
-*   **Web Interface:** Offers an interactive web page where users can submit research queries and select the desired report type.
-*   **Automated Research:** Utilizes the GPT Researcher library to gather and synthesize information from multiple online sources based on the provided query.
-*   **Report Generation:** Creates structured reports, which can be a detailed research report, a resource list, or an outline.
-*   **Source and Cost Tracking:** Provides a list of all sources used during the research process and an estimate of the associated costs.
-*   **Health Check:** Includes an endpoint to verify the configuration of required API keys.
-
-#### Inputs
-
-*   **HTTP POST to `/research` (via Web UI or API call):**
-    *   `query` (string): The specific topic or question for which research is needed.
-    *   `report_type` (string, optional): The desired format of the output report. Supported types include "research\_report" (default), "resource\_report", and "outline\_report".
+**Inputs:**
+*   **HTTP (Web Interface):** Users interact via a web page (`/`) to submit research queries and select report types.
+*   **HTTP (API Endpoint):** A POST request to `/research` with a JSON body containing:
+    *   `query` (string): The topic or question for research.
+    *   `report_type` (string, optional, default: "research_report"): The desired format of the research report (e.g., "research_report", "resource_report", "outline_report").
 *   **Environment Variables:**
-    *   `OPENAI_API_KEY`: Required for authenticating with the OpenAI API, which powers the language model capabilities.
-    *   `TAVILY_API_KEY`: Required for authenticating with the Tavily API, used for web search and information retrieval.
+    *   `OPENAI_API_KEY`: Required for accessing OpenAI's language model capabilities.
+    *   `TAVILY_API_KEY`: Required for search and information retrieval.
 
-#### Outputs
-
-*   **HTTP GET from `/` (Web UI):**
-    *   An HTML page (`static/index.html`) providing the user interface.
-*   **HTTP POST from `/research` (JSON response):**
-    *   `report` (string): The generated research report content, typically in Markdown format.
-    *   `sources` (list of strings): A list of URLs from which information was gathered.
-    *   `costs` (dictionary): Contains `total_cost` (float) representing the estimated cost of the research.
-    *   `num_sources` (integer): The total count of unique sources identified.
-
-#### Prerequisites
-
-*   **API Keys:** Requires valid `OPENAI_API_KEY` and `TAVILY_API_KEY` to be set as environment variables. Without these, the research functionality will not operate.
+**Outputs:**
+*   **HTTP (Web Interface):** Serves an HTML page (`static/index.html`) for the user interface.
+*   **HTTP (API Endpoint):** A JSON response from `/research` containing:
+    *   `report` (string): The generated research report content.
+    *   `sources` (list of strings): A list of URLs or identifiers for the sources used.
+    *   `costs` (dict): Information about the cost of the research (e.g., total cost).
+    *   `num_sources` (int): The total number of sources identified.
+*   **HTTP (API Endpoint):** A JSON response from `/health` indicating the agent's status and API key configuration.
